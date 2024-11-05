@@ -87,6 +87,12 @@ public class RNDisableBatteryOptimizationsModule extends ReactContextBaseJavaMod
     }
   }
 
+    // Implémentation vide de onNewIntent, requise par l'interface
+    @Override
+    public void onNewIntent(Intent intent) {
+        // Cette méthode est nécessaire pour implémenter ActivityEventListener mais n'est pas utilisée ici
+    }
+
   @Override
   public String getName() {
     return "RNDisableBatteryOptimizationsAndroid";
