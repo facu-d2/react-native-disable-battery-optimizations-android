@@ -1,38 +1,18 @@
-
-buildscript {
-    repositories {
-        google()
-        mavenCentral()
-    }
-
-    dependencies {
-        classpath 'com.android.tools.build:gradle:8.4.2'
-    }
-}
-
-apply plugin: 'com.android.library'
+apply from: new File(["node", "--print", "require.resolve('react-native/package.json')"].execute(null, rootDir).text.trim(), "../android/common.gradle")
 
 android {
-    compileSdkVersion 36
-    buildToolsVersion "36.0.0"
+    // El namespace es obligatorio y se basa en el paquete Java de la librería.
+    // Para el último link que pasaste, el namespace correcto es "com.reactlibrary".
+    namespace "com.reactlibrary"
 
-    defaultConfig {
-        minSdkVersion 16
-        targetSdkVersion 36
-        versionCode 1
-        versionName "1.0"
+    // Indica dónde está el código fuente Java de la librería.
+    sourceSets {
+        main {
+            java.srcDirs += "src/main/java"
+        }
     }
-    lintOptions {
+    
+    lint {
         abortOnError false
     }
 }
-
-repositories {
-    mavenCentral()
-}
-
-dependencies {
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation "com.facebook.react:react-android:0.74.3"
-}
-  
