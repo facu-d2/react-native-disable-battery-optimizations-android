@@ -1,37 +1,18 @@
-// build.gradle for react-native-disable-battery-optimizations-android
-
-buildscript {
-    repositories {
-        google()
-        mavenCentral()
-    }
-    dependencies {
-        // Usa una versión moderna del Android Gradle Plugin
-        classpath 'com.android.tools.build:gradle:8.2.1'
-    }
-}
-
 apply plugin: 'com.android.library'
 
-// Esta función lee las propiedades de versión desde la configuración de React Native,
-// asegurando que la librería use las mismas versiones que tu app principal.
-def getExtOrIntegerDefault(name) {
-    return rootProject.ext.has(name) ? rootProject.ext.get(name) : 1
+// Función segura para usar valores del proyecto principal o fallbacks
+def getExtOrIntegerDefault(name, fallback) {
+    return rootProject.ext.has(name) ? rootProject.ext.get(name) : fallback
 }
 
 android {
-    namespace "com.reactlibrary" // El namespace que ya tenías
-    compileSdkVersion getExtOrIntegerDefault('compileSdkVersion')
+    namespace "com.reactlibrary.disablebatteryoptimizationsandroid"
+
+    compileSdkVersion getExtOrIntegerDefault('compileSdkVersion', 34)
 
     defaultConfig {
-        minSdkVersion getExtOrIntegerDefault('minSdkVersion')
-        targetSdkVersion getExtOrIntegerDefault('targetSdkVersion')
-    }
-
-    buildTypes {
-        release {
-            minifyEnabled false
-        }
+        minSdkVersion getExtOrIntegerDefault('minSdkVersion', 23)
+        targetSdkVersion getExtOrIntegerDefault('targetSdkVersion', 34)
     }
 
     lint {
@@ -40,6 +21,5 @@ android {
 }
 
 dependencies {
-    // Dependencia fundamental para cualquier módulo nativo de React Native
     implementation "com.facebook.react:react-native:+"
 }
